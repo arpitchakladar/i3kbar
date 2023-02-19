@@ -8,18 +8,21 @@
 #include "storage.h"
 #include "date_time.h"
 #include "battery.h"
+#include "load.h"
 
 void update_data(unsigned long secs_passed) {
 	update_memory(secs_passed);
 	update_storage(secs_passed);
 	update_date_time(secs_passed);
 	update_battery(secs_passed);
+	update_load(secs_passed);
 }
 
 void create_bar() {
 	create_starting_block();
 	show_username();
 	show_memory();
+	show_load();
 	show_storage();
 	show_date_time();
 	show_battery();
@@ -29,6 +32,7 @@ void create_bar() {
 int main(int argc, char *argv[]) {
 	printf("{\"version\":1}\n[\n");
 	initialize_username();
+	initialize_load();
 	update_data(0);
 	for (int i = 0; i < 4; i++) {
 		create_bar();
