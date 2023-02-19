@@ -11,11 +11,11 @@ static void _show_storage() {
 }
 
 void update_storage(unsigned long secs_passed) {
-	if (secs_passed % 31 == 0) {
+	if (secs_passed % 61 == 0) {
 		statvfs("/", &_info);
 	}
 }
 
 void show_storage() {
-	create_function_block("storage", "", &_show_storage, "#b16286");
+	create_function_block("storage", "", &_show_storage, "#8ec07c");
 }

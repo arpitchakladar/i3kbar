@@ -14,7 +14,7 @@ static void _show_memory() {
 }
 
 void update_memory(unsigned long secs_passed) {
-	if (secs_passed % 13 == 0) {
+	if (secs_passed % 17 == 0) {
 		sysinfo(&_info);
 	}
 }

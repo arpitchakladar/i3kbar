@@ -6,10 +6,12 @@
 #include "username.h"
 #include "memory.h"
 #include "storage.h"
+#include "date_time.h"
 
 void update_data(unsigned long secs_passed) {
 	update_memory(secs_passed);
 	update_storage(secs_passed);
+	update_date_time(secs_passed);
 }
 
 void create_bar() {
@@ -17,6 +19,7 @@ void create_bar() {
 	show_username();
 	show_memory();
 	show_storage();
+	show_date_time();
 	create_ending_block();
 }
 
