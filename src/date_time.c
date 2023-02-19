@@ -5,11 +5,23 @@
 #include "block.h"
 
 static struct tm _time;
+static char _time_meridiem = 'A';
+static const char *_time_icons[] = { "󱑊", "󱐿", "󱑀", "󱑁", "󱑂", "󱑃", "󱑄", "󱑅", "󱑆", "󱑇", "󱑈", "󱑉" };
+static const char *_time_icon;
 
 void update_date_time(unsigned long secs_passed) {
 	if (secs_passed % 59 == 0) {
 		time_t t = time(NULL);
 		_time = *localtime(&t);
+	}
+	if (secs_passed % 1801 == 0) {
+		if (_time.tm_hour < 12) {
+			_time_icon = _time_icons[_time.tm_hour];
+			_time_meridiem = 'A';
+		} else {
+			_time_icon = _time_icons[_time.tm_hour % 12];
+			_time_meridiem = 'P';
+		}
 	}
 }
 
@@ -17,7 +29,7 @@ static const char* _months[] = { "Jan", "Feb", "March", "April", "May", "June", 
 static const char* _days_of_week[] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
 
 static void _show_time() {
-	printf("%02d:%02d", _time.tm_hour, _time.tm_min);
+	printf("%02d:%02d %cM", _time.tm_hour, _time.tm_min, _time_meridiem);
 }
 
 static void _show_date() {
@@ -25,6 +37,6 @@ static void _show_date() {
 }
 
 void show_date_time() {
-	create_function_block("time", "󰥔", &_show_time, "#b16286");
+	create_function_block("time", _time_icon, &_show_time, "#b16286");
 	create_function_block("day", "󰖨", &_show_date, "#458588");
 }
