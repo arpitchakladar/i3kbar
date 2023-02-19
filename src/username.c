@@ -5,7 +5,5 @@
 #include "block.h"
 
 void show_username() {
-	char username[32];
-	getlogin_r(username, 32);
-	create_block("username", "", username, "#689d6a");
+	create_text_block("username", "", getlogin(), "#689d6a");
 }
