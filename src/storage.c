@@ -3,6 +3,7 @@
 #include "storage.h"
 #include "block.h"
 #include "utils.h"
+#include "color.h"
 
 static struct statvfs _info;
 
@@ -17,5 +18,5 @@ void update_storage(unsigned long secs_passed) {
 }
 
 void show_storage() {
-	create_function_block("storage", "", &_show_storage, "#8ec07c");
+	create_function_block("storage", "", &_show_storage, DarkMagenta);
 }

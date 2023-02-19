@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "battery.h"
+#include "color.h"
 #include "block.h"
 
 static char _battery_percentage[5];
@@ -17,6 +18,7 @@ void update_battery(unsigned long secs_passed) {
 		FILE *battery_percentage_file = fopen("/sys/class/power_supply/BAT0/capacity", "r");
 		size_t l = fread(_battery_percentage, sizeof(char), 4, battery_percentage_file);
 		_battery_percentage[l - 1] = '%';
+		_battery_percentage[l] = '\0';
 		_battery_percentage_length = l - 1;
 		fclose(battery_percentage_file);
 		FILE *battery_charging_state_file = fopen("/sys/class/power_supply/AC/online", "r");
@@ -31,5 +33,5 @@ void update_battery(unsigned long secs_passed) {
 }
 
 void show_battery() {
-	create_text_block("battery", _battery_icon, _battery_percentage, "#fabd2f");
+	create_text_block("battery", _battery_icon, _battery_percentage, DarkGreen);
 }

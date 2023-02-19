@@ -3,6 +3,7 @@
 
 #include "date_time.h"
 #include "block.h"
+#include "color.h"
 
 static struct tm _time;
 static char _time_meridiem = 'A';
@@ -37,6 +38,6 @@ static void _show_date() {
 }
 
 void show_date_time() {
-	create_function_block("time", _time_icon, &_show_time, "#b16286");
-	create_function_block("day", "󰖨", &_show_date, "#458588");
+	create_function_block("time", _time_icon, &_show_time, Green);
+	create_function_block("day", "󰖨", &_show_date, DarkYellow);
 }

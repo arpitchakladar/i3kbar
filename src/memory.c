@@ -4,6 +4,7 @@
 #include "memory.h"
 #include "block.h"
 #include "utils.h"
+#include "color.h"
 
 static struct sysinfo _info;
 
@@ -20,5 +21,5 @@ void update_memory(unsigned long secs_passed) {
 }
 
 void show_memory() {
-	create_function_block("memory", "", &_show_memory, "#d79921");
+	create_function_block("memory", "", &_show_memory, DarkBlue);
 }
