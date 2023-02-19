@@ -5,12 +5,18 @@
 #include "block.h"
 #include "utils.h"
 
+static struct sysinfo _info;
+
 static void _show_memory() {
-	struct sysinfo info;
-	sysinfo(&info);
-	format_size(info.freeram);
+	format_size(_info.freeram);
 	printf(" of ");
-	format_size(info.totalram);
+	format_size(_info.totalram);
+}
+
+void update_memory(unsigned long secs_passed) {
+	if (secs_passed % 13 == 0) {
+		sysinfo(&_info);
+	}
 }
 
 void show_memory() {

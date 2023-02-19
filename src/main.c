@@ -7,6 +7,11 @@
 #include "memory.h"
 #include "storage.h"
 
+void update_data(unsigned long secs_passed) {
+	update_memory(secs_passed);
+	update_storage(secs_passed);
+}
+
 void create_bar() {
 	create_starting_block();
 	show_username();
@@ -17,12 +22,16 @@ void create_bar() {
 
 int main(int argc, char *argv[]) {
 	printf("{\"version\":1}\n[\n");
+	initialize_username();
+	update_data(0);
 	for (int i = 0; i < 4; i++) {
 		create_bar();
 	}
+	unsigned long secs_passed = 0;
 	while (1) {
 		create_bar();
 		sleep(1);
+		update_data(++secs_passed);
 	}
 	return EXIT_SUCCESS;
 }

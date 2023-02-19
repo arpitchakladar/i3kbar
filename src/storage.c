@@ -4,10 +4,16 @@
 #include "block.h"
 #include "utils.h"
 
+static struct statvfs _info;
+
 static void _show_storage() {
-	struct statvfs info;
-	statvfs("/", &info);
-	format_size(info.f_bavail * info.f_bsize);
+	format_size(_info.f_bavail * _info.f_bsize);
+}
+
+void update_storage(unsigned long secs_passed) {
+	if (secs_passed % 31 == 0) {
+		statvfs("/", &_info);
+	}
 }
 
 void show_storage() {
