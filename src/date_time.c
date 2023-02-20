@@ -30,7 +30,7 @@ static const char* _months[] = { "Jan", "Feb", "March", "April", "May", "June", 
 static const char* _days_of_week[] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
 
 static void _show_time() {
-	printf("%02d:%02d %cM", _time.tm_hour, _time.tm_min, _time_meridiem);
+	printf("%02d:%02d%cM", _time.tm_hour <= 12 ? _time.tm_hour : (_time.tm_hour - 1), _time.tm_min, _time_meridiem);
 }
 
 static void _show_date() {
@@ -39,5 +39,5 @@ static void _show_date() {
 
 void show_date_time() {
 	create_function_block("time", _time_icon, &_show_time, Green);
-	create_function_block("day", "󰖨", &_show_date, DarkYellow);
+	create_function_block("day", "", &_show_date, DarkYellow);
 }

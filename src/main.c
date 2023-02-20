@@ -19,22 +19,22 @@ void update_data(unsigned long secs_passed) {
 }
 
 void create_bar() {
-	create_starting_block();
+	start_block();
 	show_username();
 	show_memory();
 	show_load();
 	show_storage();
 	show_date_time();
 	show_battery();
-	create_ending_block();
+	end_block();
 }
 
 int main(int argc, char *argv[]) {
-	printf("{\"version\":1}\n[\n");
+	initialize_bar();
 	initialize_username();
 	initialize_load();
 	update_data(0);
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 5; i++) {
 		create_bar();
 	}
 	unsigned long secs_passed = 0;
