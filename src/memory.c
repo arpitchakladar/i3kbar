@@ -1,3 +1,4 @@
+#include <stddef.h>
 #include <stdio.h>
 #include <sys/sysinfo.h>
 
@@ -14,7 +15,7 @@ static void _show_memory() {
 	format_size(_info.totalram);
 }
 
-void update_memory(unsigned long secs_passed) {
+void update_memory(size_t secs_passed) {
 	if (secs_passed % 17 == 0) {
 		sysinfo(&_info);
 	}

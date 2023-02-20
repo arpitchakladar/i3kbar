@@ -1,3 +1,5 @@
+#include <stddef.h>
+#include <inttypes.h>
 #include <stdio.h>
 
 #include "battery.h"
@@ -5,15 +7,15 @@
 #include "block.h"
 
 static char _battery_percentage[5];
-static char _battery_percentage_length;
-static char _battery_charging_state;
+static uint8_t _battery_percentage_length;
+static uint8_t _battery_charging_state;
 static const char* _battery_icons[] = {
 	"󰁹", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂",
 	"󰂅", "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋"
 };
 static const char *_battery_icon;
 
-void update_battery(unsigned long secs_passed) {
+void update_battery(size_t secs_passed) {
 	if (secs_passed % 31 == 0) {
 		FILE *battery_percentage_file = fopen("/sys/class/power_supply/BAT0/capacity", "r");
 		size_t l = fread(_battery_percentage, sizeof(char), 4, battery_percentage_file);
@@ -33,5 +35,5 @@ void update_battery(unsigned long secs_passed) {
 }
 
 void show_battery() {
-	create_text_block("battery", _battery_icon, _battery_percentage, DarkGreen);
+	create_text_block("battery", _battery_icon, _battery_percentage, Cyan);
 }

@@ -1,10 +1,12 @@
+#include <inttypes.h>
+#include <stddef.h>
 #include <stdio.h>
 
 #include "utils.h"
 
-void format_size(unsigned long size) {
-	float magnitude;
-	char unit;
+void format_size(size_t size) {
+	double magnitude;
+	uint8_t unit;
 	if (size >= 1024ul * 1024ul * 1024ul * 1024ul) {
 		magnitude = size / (1024ul * 1024ul * 1024ul * 10ul);
 		unit = 'T';

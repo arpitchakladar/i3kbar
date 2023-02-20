@@ -1,3 +1,4 @@
+#include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
@@ -7,7 +8,7 @@
 #include "color.h"
 
 static char _load;
-static unsigned int _core_count = 0;
+static size_t _core_count = 0;
 
 void initialize_load() {
 	FILE *cpu_info_file = fopen("/sys/class/power_supply/BAT0/capacity", "r");
@@ -22,7 +23,7 @@ void initialize_load() {
 	}
 }
 
-void update_load(unsigned long secs_passed) {
+void update_load(size_t secs_passed) {
 	if (secs_passed % 5 == 0) {
 		double load;
 		getloadavg(&load, 1);

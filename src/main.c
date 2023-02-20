@@ -1,3 +1,4 @@
+#include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -10,7 +11,7 @@
 #include "battery.h"
 #include "load.h"
 
-void update_data(unsigned long secs_passed) {
+void update_data(size_t secs_passed) {
 	update_memory(secs_passed);
 	update_storage(secs_passed);
 	update_date_time(secs_passed);
@@ -34,10 +35,10 @@ int main(int argc, char *argv[]) {
 	initialize_username();
 	initialize_load();
 	update_data(0);
-	for (int i = 0; i < 5; i++) {
+	for (size_t i = 0; i < 5; i++) {
 		create_bar();
 	}
-	unsigned long secs_passed = 0;
+	size_t secs_passed = 0;
 	while (1) {
 		create_bar();
 		sleep(1);

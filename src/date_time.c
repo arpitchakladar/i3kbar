@@ -1,3 +1,4 @@
+#include <stddef.h>
 #include <stdio.h>
 #include <time.h>
 
@@ -10,7 +11,7 @@ static char _time_meridiem = 'A';
 static const char *_time_icons[] = { "󱑊", "󱐿", "󱑀", "󱑁", "󱑂", "󱑃", "󱑄", "󱑅", "󱑆", "󱑇", "󱑈", "󱑉" };
 static const char *_time_icon;
 
-void update_date_time(unsigned long secs_passed) {
+void update_date_time(size_t secs_passed) {
 	if (secs_passed % 59 == 0) {
 		time_t t = time(NULL);
 		_time = *localtime(&t);

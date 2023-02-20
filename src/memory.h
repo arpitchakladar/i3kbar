@@ -1,4 +1,6 @@
+#include <stddef.h>
+
 #pragma once
 
-void update_memory(unsigned long);
+void update_memory(size_t);
 void show_memory();
