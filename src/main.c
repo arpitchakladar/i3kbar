@@ -15,7 +15,7 @@
 void update_data(size_t secs_passed) {
 	update_memory(secs_passed);
 	update_storage(secs_passed);
-	update_internet(secs_passed);
+	update_internet(secs_passed + 1); // To prevent it from running the first time
 	update_date_time(secs_passed);
 	update_battery(secs_passed);
 	update_load(secs_passed);

@@ -59,12 +59,13 @@ static void *_update_internet(void *_) {
 
 void initialize_internet() {
 	_web_icon = _web_icons[0];
+	pthread_t thread_id;
+	pthread_create(&thread_id, NULL, _update_internet, NULL);
 }
 
 void update_internet(size_t secs_passed) {
 	if (secs_passed % 601 == 0) {
-		pthread_t thread_id;
-		pthread_create(&thread_id, NULL, _update_internet, NULL);
+		_web_icon = _web_icons[_check_connection()];
 	}
 }
 
