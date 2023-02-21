@@ -9,7 +9,7 @@
 static size_t _size;
 
 static void _show_storage() {
-	format_size(_size);
+	print_formatted_size(_size);
 }
 
 void update_storage(size_t secs_passed) {
@@ -21,5 +21,5 @@ void update_storage(size_t secs_passed) {
 }
 
 void show_storage() {
-	create_function_block("storage", "", &_show_storage, DarkGreen);
+	create_function_block("storage", "", _show_storage, DarkBlue);
 }

@@ -2,4 +2,4 @@
 
 #pragma once
 
-void format_size(size_t);
+void print_formatted_size(size_t);

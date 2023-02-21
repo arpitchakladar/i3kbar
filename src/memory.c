@@ -7,20 +7,24 @@
 #include "utils.h"
 #include "color.h"
 
-static struct sysinfo _info;
+static size_t _free_ram;
+static size_t _total_ram;
 
 static void _show_memory() {
-	format_size(_info.freeram);
+	print_formatted_size(_free_ram);
 	printf(" of ");
-	format_size(_info.totalram);
+	print_formatted_size(_total_ram);
 }
 
 void update_memory(size_t secs_passed) {
 	if (secs_passed % 17 == 0) {
-		sysinfo(&_info);
+		struct sysinfo info;
+		sysinfo(&info);
+		_free_ram = info.freeram;
+		_total_ram = info.totalram;
 	}
 }
 
 void show_memory() {
-	create_function_block("memory", "", &_show_memory, DarkBlue);
+	create_function_block("memory", "", _show_memory, DarkYellow);
 }

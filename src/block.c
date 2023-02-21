@@ -12,7 +12,7 @@ void start_block() {
 }
 
 void end_block() {
-	printf(",{\"full_text\":\"\",\"color\":\"%s\"}],\n", get_color_hex(DarkGrey));
+	printf(",{\"name\":\"end\",\"full_text\":\"\",\"color\":\"%s\"}],\n", get_color_hex(DarkGrey));
 }
 
 void create_function_block(const char* name, const char *icon, void (*callback)(), enum Color color) {

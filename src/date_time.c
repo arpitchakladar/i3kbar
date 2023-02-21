@@ -12,7 +12,7 @@ static const char* _time_icons[] = { "󱑊", "󱐿", "󱑀", "󱑁", "󱑂", "�
 static const char* _time_icon;
 
 void update_date_time(size_t secs_passed) {
-	if (secs_passed % 59 == 0) {
+	if (secs_passed % 47 == 0) {
 		time_t t = time(NULL);
 		_time = *localtime(&t);
 	}
@@ -39,6 +39,6 @@ static void _show_date() {
 }
 
 void show_date_time() {
-	create_function_block("time", _time_icon, &_show_time, Green);
-	create_function_block("day", "", &_show_date, DarkYellow);
+	create_function_block("time", _time_icon, _show_time, Green);
+	create_function_block("day", "", _show_date, DarkCyan);
 }

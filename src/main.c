@@ -17,8 +17,10 @@ void update_data(size_t secs_passed) {
 	update_storage(secs_passed);
 	update_internet(secs_passed + 1); // To prevent it from running the first time
 	update_date_time(secs_passed);
-	update_battery(secs_passed);
 	update_load(secs_passed);
+#ifndef DESKTOP_MODE
+	update_battery(secs_passed);
+#endif
 }
 
 void create_bar() {
@@ -29,7 +31,9 @@ void create_bar() {
 	show_storage();
 	show_internet();
 	show_date_time();
+#ifndef DESKTOP_MODE
 	show_battery();
+#endif
 	end_block();
 }
 

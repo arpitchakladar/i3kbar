@@ -4,7 +4,7 @@
 
 #include "utils.h"
 
-void format_size(size_t size) {
+void print_formatted_size(size_t size) {
 	double magnitude;
 	uint8_t unit;
 	if (size >= 1024.0 * 1024.0 * 1024.0 * 1024.0) {

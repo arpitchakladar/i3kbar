@@ -37,5 +37,5 @@ static void _show_load() {
 }
 
 void show_load() {
-	create_function_block("load", "󰖡", &_show_load, Blue);
+	create_function_block("load", "󰖡", _show_load, Green);
 }

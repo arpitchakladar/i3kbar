@@ -11,15 +11,25 @@ DEPS := $(OBJS:.o=.d)
 INC_DIRS := $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
-LDFLAGS = -O3
-CPPFLAGS ?= $(INC_FLAGS) -MMD -MP -O3
+ifeq ($(mode), desktop)
+	DEFINES += -DDESKTOP_MODE
+endif
+
+CFLAGS = $(INC_FLAGS) $(DEFINES)
+
+ifeq ($(config), release)
+	LDFLAGS := -O3 -Wl,--gc-section
+	CFLAGS +=  -fdata-sections -ffunction-sections -O3
+else
+	CFLAGS += -MMD -MP
+endif
 
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
 	$(CC) $(OBJS) -o $@ $(LDFLAGS)
 
 $(OBJ_DIR)/%.c.o: %.c
 	$(MKDIR_P) $(dir $@)
-	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 .PHONY: clean
 

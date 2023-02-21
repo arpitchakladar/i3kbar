@@ -9,7 +9,9 @@
 #include "block.h"
 #include "color.h"
 
-static const char* _web_icons[] = { "󰪎", "󰖟 " };
+#define PING_SERVER_IP 0x08080808;
+
+static const char* _web_icons[] = { "󰈂", "󰈁" };
 static const char* _web_icon;
 
 static size_t _check_connection() {
@@ -20,7 +22,7 @@ static size_t _check_connection() {
 
 	struct sockaddr_in addr;
 	addr.sin_family = AF_INET;
-	addr.sin_addr.s_addr = htonl(0x08080808);
+	addr.sin_addr.s_addr = PING_SERVER_IP;
 
 	struct icmphdr request_header = {
 		.type = ICMP_ECHO,
@@ -32,7 +34,7 @@ static size_t _check_connection() {
 	
 	int status;
 
-	status = sendto(sock, &request_header, sizeof request_header, 0, (struct sockaddr*) &addr, sizeof addr);
+	status = sendto(sock, &request_header, sizeof(struct icmphdr), 0, (struct sockaddr*) &addr, sizeof addr);
 	if (status <= 0) {
 		return 0;
 	}
@@ -52,7 +54,7 @@ static size_t _check_connection() {
 	return 1;
 }
 
-static void *_update_internet(void *_) {
+static void *_update_internet(void *vargp) {
 	_web_icon = _web_icons[_check_connection()];
 	return NULL;
 }
@@ -64,11 +66,11 @@ void initialize_internet() {
 }
 
 void update_internet(size_t secs_passed) {
-	if (secs_passed % 601 == 0) {
+	if (secs_passed % 600 == 0) {
 		_web_icon = _web_icons[_check_connection()];
 	}
 }
 
 void show_internet() {
-	create_text_block("internet", _web_icon, "", DarkMagenta);
+	create_text_block("internet", "󰖟", _web_icon, Blue);
 }
