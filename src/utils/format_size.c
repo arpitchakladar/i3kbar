@@ -7,21 +7,21 @@
 void format_size(size_t size) {
 	double magnitude;
 	uint8_t unit;
-	if (size >= 1024ul * 1024ul * 1024ul * 1024ul) {
-		magnitude = size / (1024ul * 1024ul * 1024ul * 10ul);
+	if (size >= 1024.0 * 1024.0 * 1024.0 * 1024.0) {
+		magnitude = size / (1024.0 * 1024.0 * 1024.0 * 1024.0);
 		unit = 'T';
-	} else if (size >= 1024ul * 1024ul * 1024ul) {
-		magnitude = size / (1024ul * 1024ul * 10ul);
+	} else if (size >= 1024.0 * 1024.0 * 1024.0) {
+		magnitude = size / (1024.0 * 1024.0 * 1024.0);
 		unit = 'G';
-	} else if (size >= 1024ul * 1024ul) {
-		magnitude = size / (1024ul * 10ul);
+	} else if (size >= 1024.0 * 1024.0) {
+		magnitude = size / (1024.0 * 1024.0);
 		unit = 'M';
-	}  else if (size >= 1024ul) {
-		magnitude = size / 10ul;
+	}  else if (size >= 1024.0) {
+		magnitude = size / 1024.0;
 		unit = 'K';
 	} else {
-		magnitude = size * 100ul;
+		magnitude = size;
 		unit = ' ';
 	}
-	printf("%.2f%cB", magnitude / 102ul, unit);
+	printf("%.2f%cB", magnitude, unit);
 }

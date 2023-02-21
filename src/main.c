@@ -10,10 +10,12 @@
 #include "date_time.h"
 #include "battery.h"
 #include "load.h"
+#include "internet.h"
 
 void update_data(size_t secs_passed) {
 	update_memory(secs_passed);
 	update_storage(secs_passed);
+	update_internet(secs_passed);
 	update_date_time(secs_passed);
 	update_battery(secs_passed);
 	update_load(secs_passed);
@@ -25,6 +27,7 @@ void create_bar() {
 	show_memory();
 	show_load();
 	show_storage();
+	show_internet();
 	show_date_time();
 	show_battery();
 	end_block();
@@ -34,6 +37,7 @@ int main(int argc, char *argv[]) {
 	initialize_bar();
 	initialize_username();
 	initialize_load();
+	initialize_internet();
 	update_data(0);
 	for (size_t i = 0; i < 5; i++) {
 		create_bar();

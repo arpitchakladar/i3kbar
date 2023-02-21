@@ -8,8 +8,8 @@
 
 static struct tm _time;
 static char _time_meridiem = 'A';
-static const char *_time_icons[] = { "󱑊", "󱐿", "󱑀", "󱑁", "󱑂", "󱑃", "󱑄", "󱑅", "󱑆", "󱑇", "󱑈", "󱑉" };
-static const char *_time_icon;
+static const char* _time_icons[] = { "󱑊", "󱐿", "󱑀", "󱑁", "󱑂", "󱑃", "󱑄", "󱑅", "󱑆", "󱑇", "󱑈", "󱑉" };
+static const char* _time_icon;
 
 void update_date_time(size_t secs_passed) {
 	if (secs_passed % 59 == 0) {
