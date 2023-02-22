@@ -11,9 +11,10 @@ static char _load;
 static size_t _core_count = 0;
 
 void initialize_load() {
-	FILE *cpu_info_file = fopen("/sys/class/power_supply/BAT0/capacity", "r");
+	FILE *cpu_info_file = fopen("/proc/cpuinfo", "r");
 	char buffer[10];
 	size_t l = fread(buffer, sizeof(char), 10, cpu_info_file);
+	// printf("%s\n", buffer);
 	for (size_t i = 0; i < l; i++) {
 		if (isdigit(buffer[i])) {
 			_core_count = _core_count * 10 + (buffer[i] - '0');
