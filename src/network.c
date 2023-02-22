@@ -22,40 +22,40 @@ void initialize_network() {
 	char current_char;
 	size_t i = 0;
 	size_t line_start = 128;
-	size_t line_number = 0;
 	size_t column_number = 0;
-	size_t i2 = 0;
+	size_t j = 0;
 	int copy = 0;
 	for (;;) {
 		current_char = fgetc(net_route_file_ptr);
 		if (current_char == EOF) {
 			break;
-		} else if (copy) {
-			if (current_char == '\t') {
-				break;
-			} else {
-				_interface_name[i2++] = current_char;
-			}
 		} else {
 			switch (current_char) {
 				case '\n':
+					if (copy) {
+						goto end;
+					}
 					line_start = i + 1;
-					line_number++;
 					column_number = 0;
-					i2 = 0;
+					j = 0;
 					break;
 
 				case '\t':
+					if (copy) {
+						goto end;
+					}
 					column_number++;
-					i2 = 0;
+					j = 0;
 					break;
 
 				default:
-					if (column_number == 1) {
-						if (current_char == '0') i2++;
-						if (i2 >= 8) {
+					if (copy) {
+						_interface_name[j++] = current_char;
+					} else if (column_number == 1) {
+						if (current_char == '0') j++;
+						if (j >= 8) {
 							copy = 1;
-							i2 = 0;
+							j = 0;
 							fseek(net_route_file_ptr, line_start, SEEK_SET);
 						}
 					}
@@ -63,8 +63,9 @@ void initialize_network() {
 		}
 		i++;
 	}
+end:
 	fclose(net_route_file_ptr);
-	_interface_name[i2] = '\0';
+	_interface_name[j] = '\0';
 	strcat(strcat(_interface_carrier_file_path, _interface_name), "/carrier");
 }
 

@@ -12,16 +12,51 @@ static size_t _core_count = 0;
 
 void initialize_load() {
 	FILE *cpu_info_file = fopen("/proc/cpuinfo", "r");
-	char buffer[10];
-	size_t l = fread(buffer, sizeof(char), 10, cpu_info_file);
-	// printf("%s\n", buffer);
-	for (size_t i = 0; i < l; i++) {
-		if (isdigit(buffer[i])) {
-			_core_count = _core_count * 10 + (buffer[i] - '0');
-		} else {
+	size_t i = 0;
+	size_t j = 0;
+	int compare = 0;
+	char current_char;
+	char field_name[] = "cpu cores";
+	for (;;) {
+		current_char = fgetc(cpu_info_file);
+		if (current_char == EOF) {
 			break;
+		} else {
+			switch (current_char) {
+				case '\n':
+					if (j < 9) {
+						j = 0;
+						compare = 1;
+					} else {
+						goto end;
+					}
+					break;
+
+				case '\t':
+					if (j < 9) {
+						j = 0;
+					} else {
+						fseek(cpu_info_file, i + 3, SEEK_SET);
+						i += 2;
+					}
+					compare = 0;
+					break;
+
+				default:
+					if (compare) {
+						if (field_name[j++] != current_char) {
+							compare = 0;
+							j = 0;
+						}
+					} else if (j >= 9) {
+						_core_count = _core_count * 10 + (current_char - '0');
+					}
+			}
 		}
+		i++;
 	}
+end:
+	fclose(cpu_info_file);
 }
 
 void update_load(size_t secs_passed) {
