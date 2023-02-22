@@ -18,8 +18,8 @@ endif
 CFLAGS = $(INC_FLAGS) $(DEFINES)
 
 ifeq ($(config), release)
-	LDFLAGS := -O3 -Wl,--gc-section
-	CFLAGS +=  -fdata-sections -ffunction-sections -O3
+	LDFLAGS := -O3 -Wl,--gc-section -march=native
+	CFLAGS += -fdata-sections -ffunction-sections -O3 -march=native
 else
 	CFLAGS += -MMD -MP
 endif

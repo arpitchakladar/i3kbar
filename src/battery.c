@@ -6,6 +6,7 @@
 #include "color.h"
 #include "block.h"
 
+#ifndef DESKTOP_MODE
 static char _battery_percentage[5];
 static const char* _battery_icons[] = {
 	"󰁹", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", // discharging
@@ -34,3 +35,4 @@ void update_battery(size_t secs_passed) {
 void show_battery() {
 	create_text_block("battery", _battery_icon, _battery_percentage, Cyan);
 }
+#endif

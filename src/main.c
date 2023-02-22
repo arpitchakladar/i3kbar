@@ -17,9 +17,9 @@ void update_data(size_t secs_passed) {
 	update_storage(secs_passed); // 61s
 	update_network(secs_passed); // 37s
 	update_date_time(secs_passed); // 47s
-	update_load(secs_passed); // 5s
+	update_load(secs_passed); // 19s
 #ifndef DESKTOP_MODE
-	update_battery(secs_passed);
+	update_battery(secs_passed); // 31s
 #endif
 }
 

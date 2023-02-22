@@ -38,4 +38,3 @@ bar {
 - Add mode items to the bar
 	- volume
 	- active process count
-- fix the way internet status is determied

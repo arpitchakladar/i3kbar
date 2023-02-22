@@ -2,13 +2,12 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "network.h"
 #include "block.h"
 #include "color.h"
 #include "utils.h"
-
-#define PING_SERVER_IP 0x08080808;
 
 static char _interface_carrier_file_path[38] = "/sys/class/net/";
 static char _interface_name[16];
@@ -24,7 +23,7 @@ void initialize_network() {
 	size_t line_start = 128;
 	size_t column_number = 0;
 	size_t j = 0;
-	int copy = 0;
+	bool copy = false;
 	for (;;) {
 		current_char = fgetc(net_route_file_ptr);
 		if (current_char == EOF) {
@@ -54,7 +53,7 @@ void initialize_network() {
 					} else if (column_number == 1) {
 						if (current_char == '0') j++;
 						if (j >= 8) {
-							copy = 1;
+							copy = true;
 							j = 0;
 							fseek(net_route_file_ptr, line_start, SEEK_SET);
 						}

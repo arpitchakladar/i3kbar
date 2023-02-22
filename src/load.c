@@ -2,19 +2,21 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <stdbool.h>
+#include <inttypes.h>
 
 #include "load.h"
 #include "block.h"
 #include "color.h"
 
-static char _load;
+static uint8_t _load;
 static size_t _core_count = 0;
 
 void initialize_load() {
 	FILE *cpu_info_file = fopen("/proc/cpuinfo", "r");
 	size_t i = 0;
 	size_t j = 0;
-	int compare = 0;
+	bool compare = false;
 	char current_char;
 	char field_name[] = "cpu cores";
 	for (;;) {
@@ -26,7 +28,7 @@ void initialize_load() {
 				case '\n':
 					if (j < 9) {
 						j = 0;
-						compare = 1;
+						compare = true;
 					} else {
 						goto end;
 					}
@@ -39,13 +41,13 @@ void initialize_load() {
 						fseek(cpu_info_file, i + 3, SEEK_SET);
 						i += 2;
 					}
-					compare = 0;
+					compare = false;
 					break;
 
 				default:
 					if (compare) {
 						if (field_name[j++] != current_char) {
-							compare = 0;
+							compare = true;
 							j = 0;
 						}
 					} else if (j >= 9) {
@@ -60,11 +62,11 @@ end:
 }
 
 void update_load(size_t secs_passed) {
-	if (secs_passed % 5 == 0) {
+	if (secs_passed % 19 == 0) {
 		double load;
 		getloadavg(&load, 1);
 		load = (load / _core_count) * 100;
-		_load = load >= 100 ? 100 : (char) load;
+		_load = load >= 100 ? 100 : (uint8_t) load;
 	}
 }
 
