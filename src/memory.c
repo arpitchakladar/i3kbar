@@ -17,7 +17,7 @@ static void _show_memory() {
 }
 
 void update_memory(size_t secs_passed) {
-	if (secs_passed % 17 == 0) {
+	if (secs_passed % 11 == 0) {
 		struct sysinfo info;
 		sysinfo(&info);
 		_free_ram = info.freeram;

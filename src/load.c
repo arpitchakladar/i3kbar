@@ -62,7 +62,7 @@ end:
 }
 
 void update_load(size_t secs_passed) {
-	if (secs_passed % 19 == 0) {
+	if (secs_passed % 7 == 0) {
 		double load;
 		getloadavg(&load, 1);
 		load = (load / _core_count) * 100;

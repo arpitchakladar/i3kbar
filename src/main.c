@@ -13,14 +13,14 @@
 #include "network.h"
 
 void update_data(size_t secs_passed) {
-	update_memory(secs_passed); // 17s
-	update_load(secs_passed); // 19s
-#ifndef DESKTOP_MODE
-	update_battery(secs_passed); // 31s
-#endif
+	update_memory(secs_passed); // 11s
+	update_load(secs_passed); // 7s
 	update_network(secs_passed); // 37s & 5s
 	update_date_time(secs_passed); // 47s & 1801s
 	update_storage(secs_passed); // 61s
+#ifndef DESKTOP_MODE
+	update_battery(secs_passed); // 31s
+#endif
 }
 
 void create_bar() {
