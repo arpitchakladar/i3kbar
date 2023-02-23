@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <ctype.h>
+#include <time.h>
+#include <unistd.h>
 
 #include "network.h"
 #include "block.h"
@@ -10,6 +13,10 @@
 #include "utils.h"
 
 static char _interface_carrier_file_path[38] = "/sys/class/net/";
+static char _received_bytes_file_path[50] = "/sys/class/net/";
+static char _transmitted_bytes_file_path[50] = "/sys/class/net/";
+static size_t _received_bytes_per_second = 0;
+static size_t _transmitted_bytes_per_second = 0;
 static char _interface_name[16];
 static const char* _web_icons[] = { "󰖟 󰈂", "󰖟 󰈁" };
 static const char* _web_icon;
@@ -66,6 +73,22 @@ end:
 	fclose(net_route_file_ptr);
 	_interface_name[j] = '\0';
 	strcat(strcat(_interface_carrier_file_path, _interface_name), "/carrier");
+	strcat(strcat(_received_bytes_file_path, _interface_name), "/statistics/rx_bytes");
+	strcat(strcat(_transmitted_bytes_file_path, _interface_name), "/statistics/tx_bytes");
+}
+
+static size_t _read_number_from_file(FILE* file) {
+	char current_char;
+	size_t number = 0;
+	for (;;) {
+		current_char = fgetc(file);
+		if ('0' <= current_char && current_char <= '9') {
+			number = number * 10 + (current_char - '0');
+		} else {
+			break;
+		}
+	}
+	return number;
 }
 
 void update_network(size_t secs_passed) {
@@ -73,9 +96,30 @@ void update_network(size_t secs_passed) {
 		FILE *network_status_file = fopen(_interface_carrier_file_path, "r");
 		_web_icon = _web_icons[fgetc(network_status_file) - '0'];
 		fclose(network_status_file);
+		FILE* received_bytes_per_second_file = fopen(_received_bytes_file_path, "r");
+		FILE* transmitted_bytes_per_second_file = fopen(_transmitted_bytes_file_path, "r");
+		clock_t start = clock();
+		_received_bytes_per_second = _read_number_from_file(received_bytes_per_second_file);
+		_transmitted_bytes_per_second = _read_number_from_file(transmitted_bytes_per_second_file);
+		fseek(received_bytes_per_second_file, 0, SEEK_SET);
+		fseek(transmitted_bytes_per_second_file, 0, SEEK_SET);
+		sleep(1);
+		clock_t end = clock();
+		_received_bytes_per_second = (CLOCKS_PER_SEC * (_read_number_from_file(received_bytes_per_second_file) - _received_bytes_per_second)) / (end - start);
+		_transmitted_bytes_per_second = (CLOCKS_PER_SEC * (_read_number_from_file(transmitted_bytes_per_second_file) - _transmitted_bytes_per_second)) / (end - start);
+		fclose(received_bytes_per_second_file);
+		fclose(transmitted_bytes_per_second_file);
 	}
 }
 
+static void _show_network() {
+	printf("%s ", _interface_name);
+	print_formatted_size(_received_bytes_per_second);
+	printf("/s ");
+	print_formatted_size(_transmitted_bytes_per_second);
+	printf("/s");
+}
+
 void show_network() {
-	create_text_block("network", _web_icon, _interface_name, Blue);
+	create_function_block("network", _web_icon, _show_network, Blue);
 }
