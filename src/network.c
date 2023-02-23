@@ -108,7 +108,7 @@ void update_network(size_t secs_passed) {
 		_web_icon = _web_icons[fgetc(network_status_file) - '0'];
 		fclose(network_status_file);
 	}
-	if (secs_passed % 7 == 1) {
+	if (secs_passed % 5 == 1) {
 		size_t clock_cycles = _clock_cycle;
 		size_t previous_received_bytes = _received_bytes;
 		size_t previous_transmitted_bytes = _transmitted_bytes;
