@@ -55,39 +55,38 @@ void initialize_network() {
 	bool copy = false;
 	for (;;) {
 		current_char = fgetc(net_route_file_ptr);
-		if (current_char == EOF) {
-			break;
-		} else {
-			switch (current_char) {
-				case '\n':
-					if (copy) {
-						goto end;
-					}
-					line_start = i + 1;
-					column_number = 0;
-					j = 0;
-					break;
+		switch (current_char) {
+			case EOF:
+				goto end;
 
-				case '\t':
-					if (copy) {
-						goto end;
-					}
-					column_number++;
-					j = 0;
-					break;
+			case '\n':
+				if (copy) {
+					goto end;
+				}
+				line_start = i + 1;
+				column_number = 0;
+				j = 0;
+				break;
 
-				default:
-					if (copy) {
-						_interface_name[j++] = current_char;
-					} else if (column_number == 1) {
-						if (current_char == '0') j++;
-						if (j >= 8) {
-							copy = true;
-							j = 0;
-							fseek(net_route_file_ptr, line_start, SEEK_SET);
-						}
+			case '\t':
+				if (copy) {
+					goto end;
+				}
+				column_number++;
+				j = 0;
+				break;
+
+			default:
+				if (copy) {
+					_interface_name[j++] = current_char;
+				} else if (column_number == 1) {
+					if (current_char == '0') j++;
+					if (j >= 8) {
+						copy = true;
+						j = 0;
+						fseek(net_route_file_ptr, line_start, SEEK_SET);
 					}
-			}
+				}
 		}
 		i++;
 	}
@@ -122,11 +121,13 @@ void update_network(size_t secs_passed) {
 }
 
 static void _show_network() {
-	printf("%s  ", _interface_name);
-	print_formatted_size(_received_bytes_per_second);
-	printf("/s  ");
-	print_formatted_size(_transmitted_bytes_per_second);
-	printf("/s");
+	if (_web_icon == _web_icons[1]) {
+		printf("%s  ", _interface_name);
+		print_formatted_size(_received_bytes_per_second);
+		printf("/s  ");
+		print_formatted_size(_transmitted_bytes_per_second);
+		printf("/s");
+	}
 }
 
 void show_network() {

@@ -21,31 +21,31 @@ void initialize_load() {
 	char field_name[] = "cpu cores";
 	for (;;) {
 		current_char = fgetc(cpu_info_file);
-		if (current_char == EOF) {
-			break;
-		} else {
-			switch (current_char) {
-				case '\n':
-					if (j < 9) {
-						j = 0;
-						compare = true;
-					} else {
-						goto end;
-					}
-					break;
+		switch (current_char) {
+			case EOF:
+				goto end;
 
-				case '\t':
-					if (j < 9) {
-						j = 0;
-					} else {
-						fseek(cpu_info_file, i + 3, SEEK_SET);
-						i += 2;
-					}
-					compare = false;
-					break;
+			case '\n':
+				if (j < 9) {
+					j = 0;
+					compare = true;
+				} else {
+					goto end;
+				}
+				break;
 
-				default:
-					if (compare) {
+			case '\t':
+				if (j < 9) {
+					j = 0;
+				} else {
+					fseek(cpu_info_file, i + 3, SEEK_SET);
+					i += 2;
+				}
+				compare = false;
+				break;
+
+			default:
+				if (compare) {
 						if (field_name[j++] != current_char) {
 							compare = true;
 							j = 0;
@@ -53,7 +53,6 @@ void initialize_load() {
 					} else if (j >= 9) {
 						_core_count = _core_count * 10 + (current_char - '0');
 					}
-			}
 		}
 		i++;
 	}

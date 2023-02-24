@@ -8,7 +8,7 @@ void initialize_bar() {
 }
 
 void start_block() {
-	printf("[{\"full_text\":\"\",\"color\":\"%s\",\"separator_block_width\":0,\"separator\":false}", get_color_hex(DarkGrey));
+	printf("[{\"name\":\"start\",\"full_text\":\"\",\"color\":\"%s\",\"separator_block_width\":0,\"separator\":false}", get_color_hex(DarkGrey));
 }
 
 void end_block() {
