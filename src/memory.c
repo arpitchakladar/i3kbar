@@ -12,7 +12,7 @@ static size_t _total_ram;
 
 static void _show_memory() {
 	print_formatted_size(_free_ram);
-	printf(" of ");
+	printf(" / ");
 	print_formatted_size(_total_ram);
 }
 

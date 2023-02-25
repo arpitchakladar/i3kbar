@@ -20,7 +20,7 @@ void print_formatted_size(size_t size) {
 		magnitude = size / 1024.0;
 		unit = 'K';
 	} else {
-		printf("%.0fB", size);
+		printf("%.2fB", (double) size);
 		return;
 	}
 	printf("%.2f%cB", magnitude, unit);

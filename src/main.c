@@ -37,7 +37,7 @@ void create_bar() {
 	end_block();
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
 	initialize_bar();
 	initialize_username();
 	initialize_load();

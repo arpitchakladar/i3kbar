@@ -13,7 +13,7 @@ static uint8_t _load;
 static size_t _core_count = 0;
 
 void initialize_load() {
-	FILE *cpu_info_file = fopen("/proc/cpuinfo", "r");
+	FILE* cpu_info_file = fopen("/proc/cpuinfo", "r");
 	size_t i = 0;
 	size_t j = 0;
 	bool compare = false;

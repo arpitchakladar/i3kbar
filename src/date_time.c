@@ -7,7 +7,7 @@
 #include "block.h"
 #include "color.h"
 
-static char _time_meridiem = 'A';
+static char _time_meridiem;
 static uint8_t _time_hour;
 static uint8_t _time_minute;
 static const char* _time_icons[] = { "󱑊", "󱐿", "󱑀", "󱑁", "󱑂", "󱑃", "󱑄", "󱑅", "󱑆", "󱑇", "󱑈", "󱑉" };
@@ -16,17 +16,19 @@ static const char* _days_of_week[] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri",
 static const char* _time_icon;
 static const char* _month;
 static const char* _day_of_week;
-static  uint8_t _day;
+static uint8_t _day;
+static uint16_t _year;
 
 void update_date_time(size_t secs_passed) {
 	if (secs_passed % 47 == 0) {
 		time_t t = time(NULL);
 		struct tm _time = *localtime(&t);
-		_time_hour = _time.tm_hour <= 12 ? _time.tm_hour : (_time.tm_hour - 1);
+		_time_hour = _time.tm_hour <= 12 ? _time.tm_hour : (_time.tm_hour - 12);
 		_time_minute = _time.tm_min;
 		_month = _months[_time.tm_mon];
 		_day_of_week = _days_of_week[_time.tm_wday];
 		_day = _time.tm_mday;
+		_year = _time.tm_year + 1900;
 	}
 	if (secs_passed % 1801 == 0) {
 		if (_time_hour < 12) {
@@ -44,7 +46,7 @@ static void _show_time() {
 }
 
 static void _show_date() {
-	printf("%d %s %s", _day, _month, _day_of_week);
+	printf("%d %s %u %s", _day, _month, _year, _day_of_week);
 }
 
 void show_date_time() {

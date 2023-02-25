@@ -27,7 +27,7 @@ static clock_t _clock_cycle;
 static const char* _web_icons[] = { "󰖟 󰈂", "󰖟 󰈁" };
 static const char* _web_icon;
 
-static size_t _read_number_from_file(const char *file_name) {
+static size_t _read_number_from_file(const char* file_name) {
 	FILE* file = fopen(file_name, "r");
 	char current_char;
 	size_t number = 0;
@@ -103,7 +103,7 @@ end:
 
 void update_network(size_t secs_passed) {
 	if (secs_passed % 37 == 0) {
-		FILE *network_status_file = fopen(_interface_carrier_file_path, "r");
+		FILE* network_status_file = fopen(_interface_carrier_file_path, "r");
 		_web_icon = _web_icons[fgetc(network_status_file) - '0'];
 		fclose(network_status_file);
 	}
@@ -123,9 +123,9 @@ void update_network(size_t secs_passed) {
 static void _show_network() {
 	if (_web_icon == _web_icons[1]) {
 		printf("%s  ", _interface_name);
-		print_formatted_size(_received_bytes_per_second);
+		print_formatted_rounded_size(_received_bytes_per_second);
 		printf("/s  ");
-		print_formatted_size(_transmitted_bytes_per_second);
+		print_formatted_rounded_size(_transmitted_bytes_per_second);
 		printf("/s");
 	}
 }

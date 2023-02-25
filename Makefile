@@ -1,14 +1,14 @@
 TARGET_EXEC ?= a.out
 
-BUILD_DIR ?= build
+BUILD_DIR ?= ./build
 OBJ_DIR ?= $(BUILD_DIR)/obj
-SRC_DIRS ?= src
+SRC_DIR ?= src
 
-SRCS := $(shell find $(SRC_DIRS) -name *.c)
-OBJS := $(SRCS:%=$(OBJ_DIR)/%.o)
+SRCS := $(shell find $(SRC_DIR) -name *.c)
+OBJS := $(SRCS:src/%.c=$(OBJ_DIR)/%.o)
 DEPS := $(OBJS:.o=.d)
 
-INC_DIRS := $(shell find $(SRC_DIRS) -type d)
+INC_DIRS := $(shell find $(SRC_DIR) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
 ifeq ($(mode), desktop)
@@ -18,7 +18,7 @@ endif
 CFLAGS = $(INC_FLAGS) $(DEFINES)
 
 ifeq ($(config), release)
-	LDFLAGS := -O3 -Wl,--gc-section -march=native
+	LDFLAGS += -O3 -Wl,--gc-section -march=native
 	CFLAGS += -fdata-sections -ffunction-sections -O3 -march=native
 else
 	CFLAGS += -MMD -MP
@@ -27,7 +27,7 @@ endif
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
 	$(CC) $(OBJS) -o $@ $(LDFLAGS)
 
-$(OBJ_DIR)/%.c.o: %.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(MKDIR_P) $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
