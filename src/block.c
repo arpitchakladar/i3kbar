@@ -20,12 +20,12 @@ void end_block() {
 
 void create_function_block(const char* name, const char* icon, void (*callback)(), enum Color color) {
 	const char* _color = get_color_hex(color);
-	printf("{\"name\":\"%s\",\"separator_block_width\":0,\"separator\":false,\"border\":\"%s\",\"border_left\":0,\"border_right\":0,\"color\":\"%s\",\"full_text\":\" %s ", name, _accent_color, _color, icon);
+	printf("{\"name\":\"%s\",\"separator_block_width\":7,\"color\":\"%s\",\"full_text\":\" %s ", name, _color, icon);
 	callback();
-	printf(" \"},{\"name\":\"separator\",\"full_text\":\"\",\"color\":\"%s\",\"separator_block_width\":0,\"separator\":false,\"border\":\"%s\",\"border_left\":0,\"border_right\":0},", _accent_color, _accent_color);
+	printf(" \"},");
 }
 
 void create_text_block(const char* name, const char* icon, const char* text, enum Color color) {
 	const char* _color = get_color_hex(color);
-	printf("{\"name\":\"%s\",\"full_text\":\" %s %s \",\"border\":\"%s\",\"border_left\":0,\"border_right\":0,\"color\":\"%s\",\"separator_block_width\":0,\"separator\":false},{\"name\":\"separator\",\"full_text\":\"\",\"color\":\"%s\",\"separator_block_width\":0,\"separator\":false,\"border\":\"%s\",\"border_left\":0,\"border_right\":0},", name, icon, text, _accent_color, _color, _accent_color, _accent_color);
+	printf("{\"name\":\"%s\",\"full_text\":\" %s %s \",\"color\":\"%s\",\"separator_block_width\":7},", name, icon, text, _color);
 }
