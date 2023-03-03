@@ -6,22 +6,22 @@
 
 void print_formatted_size(size_t size) {
 	double magnitude;
-	uint8_t unit;
-	if (size >= 1024.0 * 1024.0 * 1024.0 * 1024.0) {
+	char unit;
+	if (size >= 1024.0 * 1024.0 * 1024.0 * 1000) {
 		magnitude = size / (1024.0 * 1024.0 * 1024.0 * 1024.0);
 		unit = 'T';
-	} else if (size >= 1024.0 * 1024.0 * 1024.0) {
+	} else if (size >= 1024.0 * 1024.0 * 1000) {
 		magnitude = size / (1024.0 * 1024.0 * 1024.0);
 		unit = 'G';
-	} else if (size >= 1024.0 * 1024.0) {
+	} else if (size >= 1024.0 * 1000) {
 		magnitude = size / (1024.0 * 1024.0);
 		unit = 'M';
-	}  else if (size >= 1024.0) {
+	}  else if (size >= 1000) {
 		magnitude = size / 1024.0;
 		unit = 'K';
 	} else {
-		printf("%.2fB", (double) size);
+		printf("%6.2f B", (double) size);
 		return;
 	}
-	printf("%.2f%cB", magnitude, unit);
+	printf("%6.2f%cB", magnitude, unit);
 }

@@ -6,7 +6,7 @@
 
 void print_formatted_rounded_size(size_t size) {
 	size_t magnitude;
-	uint8_t unit;
+	char unit;
 	if (size >= 1024ul * 1024ul * 1024ul * 1024ul) {
 		magnitude = size / (1024ul * 1024ul * 1024ul * 1024ul);
 		unit = 'T';
@@ -20,8 +20,8 @@ void print_formatted_rounded_size(size_t size) {
 		magnitude = size / 1024ul;
 		unit = 'K';
 	} else {
-		printf("%zuB", size);
+		printf("%4zu B", size);
 		return;
 	}
-	printf("%zu%cB", magnitude, unit);
+	printf("%4zu%cB", magnitude, unit);
 }
