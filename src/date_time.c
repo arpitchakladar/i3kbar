@@ -46,7 +46,7 @@ static void _show_time() {
 }
 
 static void _show_date() {
-	printf("%d %s %u %s", _day, _month, _year, _day_of_week);
+	printf("%2d %s %u %s", _day, _month, _year, _day_of_week);
 }
 
 void show_date_time() {

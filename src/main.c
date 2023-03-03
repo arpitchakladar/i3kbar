@@ -42,6 +42,9 @@ int main(int argc, char* argv[]) {
 	initialize_username();
 	initialize_load();
 	initialize_network();
+#ifndef DESKTOP_MODE
+	initialize_battery();
+#endif
 	update_data(0);
 	for (size_t i = 0; i < 5; i++) {
 		create_bar();

@@ -70,7 +70,7 @@ void update_load(size_t secs_passed) {
 }
 
 static void _show_load() {
-	printf("%02d%%", _load);
+	printf("%3d%%", _load);
 }
 
 void show_load() {

@@ -18,7 +18,7 @@ static const char* _color_hex[] = {
 	"#8ec07c", // Cyan
 	"#ebdbb2", // White
 	"#282828", // Background
-	"#ebdbb2"  // Foreground
+	"#928374"  // Accent
 };
 
 const char* get_color_hex(enum Color color) {

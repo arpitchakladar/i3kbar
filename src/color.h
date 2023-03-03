@@ -18,7 +18,7 @@ enum Color {
 	Cyan = 14,
 	White = 15,
 	Background = 16,
-	Foreground = 17
+	Accent = 17
 };
 
 const char* get_color_hex(enum Color);
